@@ -18,7 +18,7 @@ date. There is no comment section, no newsletter, and no tracking.
   defaults out of the box.
 - **Content is portable Markdown.** Every entry is a plain `.md` file under
   `src/content/docs/`. Nothing about the writing is locked to this generator.
-- **Cloudflare Pages** builds and hosts it. Every push to `main` deploys; every pull request
-  gets its own preview URL.
+- **Cloudflare Workers** (static assets) builds and hosts it. Every push to `main` deploys; every
+  pull request gets its own preview deployment.
 
 See the [README](https://github.com/FatalMerlin/blog#readme) for how a new entry is added.

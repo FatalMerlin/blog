@@ -1,0 +1,14 @@
+{
+	// Cloudflare Workers Static Assets config. This site is a static Astro/Starlight build:
+	// there is no Worker script (no `main`), just the pre-built files in ./dist served directly
+	// by Cloudflare's static-asset runtime. `npx wrangler deploy` uploads ./dist as the app.
+	"$schema": "node_modules/wrangler/config-schema.json",
+	"name": "blog",
+	"compatibility_date": "2026-09-16",
+	"assets": {
+		// Astro's build output. Must match `build` in package.json / the CF build settings.
+		"directory": "./dist",
+		// Serve Astro's generated 404.html on unmatched paths instead of a bare CF 404.
+		"not_found_handling": "404-page"
+	}
+}

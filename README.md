@@ -5,19 +5,19 @@ platform fixes that are real, specific, and undocumented elsewhere (Microsoft 36
 Terraform, and whatever else bites). It's a reference organized by topic, not a chronological diary.
 
 Live at **https://ftdr.dev**. Built with [Astro Starlight](https://starlight.astro.build/) and
-hosted on [Cloudflare Pages](https://pages.cloudflare.com/).
+hosted on [Cloudflare Workers static assets](https://developers.cloudflare.com/workers/static-assets/).
 
 ## The authoring loop
 
 The site is designed so the only recurring human effort is clicking **Merge**.
 
 ```
-Claude writes a post as Markdown  ->  opens a PR  ->  you review the preview + merge  ->  Cloudflare Pages auto-deploys
+Claude writes a post as Markdown  ->  opens a PR  ->  you review the preview + merge  ->  Cloudflare auto-deploys
 ```
 
 - **Every push to `main`** triggers a production build and deploy to `ftdr.dev`.
-- **Every pull request** gets its own isolated preview URL (posted by Cloudflare on the PR), so a
-  post can be read exactly as it will look before it's merged.
+- **Every pull request** gets its own isolated preview deployment, so a post can be read exactly
+  as it will look before it's merged.
 
 ## Adding a post
 
@@ -62,12 +62,16 @@ npm run preview  # serve the built ./dist locally to sanity-check the real outpu
 
 ## Deployment
 
-Cloudflare Pages is connected to this repo and builds on every push. Settings:
+Cloudflare Workers Builds is connected to this repo and deploys on every push. The Worker serves
+the pre-built `dist/` directory directly as static assets — there is no server-side code. All
+deploy config lives in [`wrangler.jsonc`](wrangler.jsonc).
 
 | Setting | Value |
 | --- | --- |
 | Build command | `npm run build` |
-| Build output directory | `dist` |
+| Deploy command | `npx wrangler deploy` |
+| Non-production branch deploy | `npx wrangler versions upload` (PR previews) |
+| Assets directory | `./dist` (set in `wrangler.jsonc`) |
 | Node version | `22` (from `.nvmrc`) |
 
 The public origin is set in exactly one place — `site` in [`astro.config.mjs`](astro.config.mjs).
