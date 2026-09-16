@@ -3,35 +3,34 @@ title: Create a Microsoft 365 tenant in a non-English region with an English loc
 description: Microsoft 365 sign-up sets a new tenant's region but not its language. Override the culture URL parameter to get an English tenant in a non-English region.
 ---
 
-Microsoft 365 sign-up lets you pick the tenant's region but never its language. Choose Germany as the region & the whole thing comes up in German: the admin center, the other portals, & the notification emails. The flow has no language control, so the region choice decides the language for you.
-
-The sign-up page carries a `culture` query parameter. Set it to `en-us` & the page, plus the tenant it creates, come up in English while the region stays German.
-
 ## Summary
 
-- **Problem:** the normal sign-up sets region, not language.
-- **Fix:** load the target region's sign-up page through the Microsoft site, then change the URL's `culture` parameter to `en-us` before you continue.
+- **Problem:** Microsoft 365 sign-up sets the tenant's region but gives no language control; the region decides the language for you.
+- **Fix:** load the target region's plans & pricing page in that region's locale, start the trial, then change the sign-up URL's `culture` parameter to `en-us` before you continue.
 - **Why the detour:** each region maps to a different product SKU, so you let the site fill in the region-correct `mproducts` value & change only `culture`.
 
 ## Steps
 
-1. Set the Microsoft site's locale to your target region: [https://www.microsoft.com/en-US/microsoft-365/locale](https://www.microsoft.com/en-US/microsoft-365/locale)
-2. Open the plans & pricing page: [https://www.microsoft.com/microsoft-365/business/microsoft-365-plans-and-pricing](https://www.microsoft.com/microsoft-365/business/microsoft-365-plans-and-pricing). With the locale stripped from the path (normally the first path segment), this URL keeps the locale you just set, so the region sticks.
-3. Find the plan you want & click its trial sign-up button.
-4. The sign-up page opens, likely in a new tab, at a URL like this:
+The examples below use Italy (`it-it`) & Germany (`de-de`); substitute your target region's codes.
+
+1. Get the plans & pricing page in your target region's locale. Two paths:
+   - **A. Your browser is already set to the target region.** Go straight to [https://www.microsoft.com/microsoft-365/business/microsoft-365-plans-and-pricing](https://www.microsoft.com/microsoft-365/business/microsoft-365-plans-and-pricing). It resolves to your region's locale.
+   - **B. Set it manually.** Open [https://www.microsoft.com/en-US/microsoft-365/locale](https://www.microsoft.com/en-US/microsoft-365/locale) & pick your region. That redirects you to a localized URL like `https://www.microsoft.com/it-it/microsoft-365/?market=it`. Copy the locale segment (`it-it`) & put it in the plans & pricing path: `https://www.microsoft.com/it-it/microsoft-365/business/microsoft-365-plans-and-pricing`.
+2. Find the plan you want & click its trial sign-up button.
+3. The sign-up page opens, likely in a new tab, at a URL like this:
 
    ```
    https://signup.microsoft.com/get-started/signup?mproducts=CFQ7TTC0LDPB:002C&renewalterm=P1Y&renewalbillingterm=P1Y&culture=de-de&country=de&ali=1
    ```
 
-   Replace `culture=de-de` with `culture=en-us` & navigate to the edited URL:
+   Replace the `culture` value with `en-us` & navigate to the edited URL:
 
    ```
    https://signup.microsoft.com/get-started/signup?mproducts=CFQ7TTC0LDPB:002C&renewalterm=P1Y&renewalbillingterm=P1Y&culture=en-us&country=de&ali=1
    ```
 
-5. The page now renders in English & shows the same pricing as before. `mproducts` & `country` are untouched, so only the language changed.
-6. Continue through the sign-up as normal.
+4. The page now renders in English & shows the same pricing as before. `mproducts` & `country` are untouched, so only the language changed.
+5. Continue through the sign-up as normal.
 
 ## Verify the tenant
 
