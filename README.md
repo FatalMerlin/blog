@@ -1,6 +1,6 @@
 # blog
 
-A low-maintenance public site for technical notes, solutions, and war-stories — the infra and
+A low-maintenance public site for technical notes, solutions, and war-stories - the infra and
 platform fixes that are real, specific, and undocumented elsewhere (Microsoft 365, Kubernetes,
 Terraform, and whatever else bites). It's a reference organized by topic, not a chronological diary.
 
@@ -21,7 +21,7 @@ Claude writes a post as Markdown  ->  opens a PR  ->  you review the preview + m
 
 ## Adding a post
 
-A post is a single Markdown file. No config changes are ever needed — the sidebar and search
+A post is a single Markdown file. No config changes are ever needed - the sidebar and search
 index rebuild themselves from the file tree.
 
 1. **Create a `.md` file** under `src/content/docs/`. Group by topic using folders; the folder
@@ -46,7 +46,7 @@ index rebuild themselves from the file tree.
 3. **Open a PR.** Check the Cloudflare preview link on the PR, then merge. Done.
 
 That's the whole workflow. Anything Starlight supports (callouts, code blocks with titles,
-tabs, diagrams) works in these files — see the [Starlight authoring
+tabs, diagrams) works in these files - see the [Starlight authoring
 docs](https://starlight.astro.build/guides/authoring-content/).
 
 ## Local development
@@ -63,7 +63,7 @@ npm run preview  # serve the built ./dist locally to sanity-check the real outpu
 ## Deployment
 
 Cloudflare Workers Builds is connected to this repo and deploys on every push. The Worker serves
-the pre-built `dist/` directory directly as static assets — there is no server-side code. All
+the pre-built `dist/` directory directly as static assets - there is no server-side code. All
 deploy config lives in [`wrangler.jsonc`](wrangler.jsonc).
 
 | Setting | Value |
@@ -74,16 +74,16 @@ deploy config lives in [`wrangler.jsonc`](wrangler.jsonc).
 | Assets directory | `./dist` (set in `wrangler.jsonc`) |
 | Node version | `22` (from `.nvmrc`) |
 
-The public origin is set in exactly one place — `site` in [`astro.config.mjs`](astro.config.mjs).
+The public origin is set in exactly one place - `site` in [`astro.config.mjs`](astro.config.mjs).
 To move the site (e.g. to a different domain later), change it there and repoint the custom
-domain in Cloudflare Pages; the Markdown content is fully portable and needs no changes.
+domain in Cloudflare; the Markdown content is fully portable and needs no changes.
 
 ## Dependencies & maintenance
 
 Dependencies are kept minimal: Astro, Starlight, and `sharp` (image optimization). There is no
-CI beyond Cloudflare Pages' own build.
+CI beyond Cloudflare's own build.
 
 To keep dependencies current with near-zero effort later, drop in
-[Renovate](https://docs.renovatebot.com/) — install the GitHub app on this repo and it will open
+[Renovate](https://docs.renovatebot.com/) - install the GitHub app on this repo and it will open
 grouped dependency-update PRs on a schedule, which flow through the same review-and-merge loop as
 posts. Nothing else needs to change to adopt it.
