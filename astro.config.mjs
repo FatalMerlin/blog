@@ -12,6 +12,8 @@ export default defineConfig({
 		starlight({
 			// Neutral wordmark. Kept intentionally light/personal so a later rebrand is a one-line change.
 			title: 'ftdr.dev',
+			// Per-page SEO head tags (og:image / twitter:image + JSON-LD) that Starlight omits.
+			routeMiddleware: './src/routeData.ts',
 			social: [{ icon: 'github', label: 'GitHub', href: 'https://github.com/FatalMerlin/blog' }],
 			// No explicit `sidebar`: Starlight auto-generates it from the src/content/docs file tree.
 			// Adding a post (or a topic folder) requires no config change — the sidebar updates itself.
